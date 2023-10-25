@@ -4,6 +4,7 @@
   "description": "This is node.js base backend for REST API.",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Bhanu Pratap Singh",
