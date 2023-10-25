@@ -77,23 +77,6 @@ var storage = multer.diskStorage({
 });
 var upload = multer({ storage: storage });
 
-// app.post('/add-product').post(upload.single('image'), (req, res) => {
-//     const name = req.body.name;
-//     //const birthdate = req.body.birthdate;
-//     const img = req.file.filename;
-
-//     const Product = {
-//         name,
-//         img
-//     }
-
-//     //const newUser = new User(Product);
-
-//     Product.save()
-//            .then(() => res.json('User Added'))
-//            .catch(err => res.status(400).json('Error: ' + err));
-// });
-
 // Add Produt Api
 app.post("/add-product", upload.single("file"), (req, resp) => {
     if (req.file == undefined) {
@@ -127,21 +110,14 @@ app.post("/add-product", upload.single("file"), (req, resp) => {
     }
 });
 
-// Add Produt Api
-//app.post("/add-product", async (req, resp) => {
-//    let product = new Product(req.body);
-//    let result = await product.save();
-//    resp.send(result);
-//});
+// GET Text Show API
+app.get("/", (res, resp) => {
+    //res.setHeader( "access-control", "true" );
+    resp.json({message : "Home Page"});
+});
 
 // Show All Products Api
-// app.get("/", (res, resp) => {
-//     //res.setHeader( "access-control", "true" );
-//     resp.json({message : "Home Page"});
-// });
-
-// Show All Products Api
-app.get("/", async (res, resp) => {
+app.get("/products", async (res, resp) => {
     const products = await Product.find();
     if (products.length > 0) {
         resp.send(products);
