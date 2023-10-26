@@ -145,7 +145,7 @@ app.get("/product/:id", async (res, resp) => {
 // Update Product Api
 app.put("/product/:id", async (req, resp) => {
     let result = await Product.updateOne(
-        { id: req.params.id },
+        { _id: req.params.id },
         { $set: req.body }
     )
     resp.send(result);
