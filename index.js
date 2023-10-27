@@ -18,30 +18,29 @@ app.use(cors());
 
 const PORT = process.env.PORT;
 
-
 const whitelist = [
     '*'
-  ];
-  
-  app.use((req, res, next) => {
+];
+
+app.use((req, res, next) => {
     const origin = req.get('referer');
     const isWhitelisted = whitelist.find((w) => origin && origin.includes(w));
     if (isWhitelisted) {
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-      res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,Authorization');
-      res.setHeader('Access-Control-Allow-Credentials', true);
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+        res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,Authorization');
+        res.setHeader('Access-Control-Allow-Credentials', true);
     }
     // Pass to next layer of middleware
     if (req.method === 'OPTIONS') res.sendStatus(200);
     else next();
-  });
-  
-  const setContext = (req, res, next) => {
+});
+
+const setContext = (req, res, next) => {
     if (!req.context) req.context = {};
     next();
-  };
-  app.use(setContext);
+};
+app.use(setContext);
 
 
 // Register Or add New User Api
@@ -82,8 +81,8 @@ app.post("/add-product", upload.single("file"), (req, resp) => {
     if (req.file == undefined) {
         return resp.send({
             message: "You must select a file.",
-            reposnse : req.body,
-            image : req.file
+            reposnse: req.body,
+            image: req.file
         });
     } else {
         var obj = {
@@ -113,7 +112,7 @@ app.post("/add-product", upload.single("file"), (req, resp) => {
 // GET Text Show API
 app.get("/", (res, resp) => {
     //res.setHeader( "access-control", "true" );
-    resp.json({message : "Home Page"});
+    resp.json({ message: "Home Page" });
 });
 
 // Show All Products Api
