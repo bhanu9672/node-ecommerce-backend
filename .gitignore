@@ -1,0 +1,4 @@
+# This is git ingore file.
+
+# dependencies
+/node_modules
