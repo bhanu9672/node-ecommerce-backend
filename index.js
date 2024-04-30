@@ -1,8 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const multer = require("multer")
-var fs = require('fs');
-var path = require('path');
 const bodyParser = require("body-parser");
 
 // Database connection
@@ -20,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 /* 
-    Routes For users, products
+    Routes For users, products, Product Category
 */
 app.use( "/", productRoute )
 app.use( "/", userRoute )

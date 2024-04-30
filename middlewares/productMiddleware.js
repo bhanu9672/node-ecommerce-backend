@@ -1,6 +1,7 @@
 const Product = require("../models/Product")
 var fs = require('fs');
 var path = require('path');
+const Category = require("../models/Category");
 
 // Add Product
 const CreateNewProduct = (req, res) => {
@@ -33,7 +34,7 @@ const CreateNewProduct = (req, res) => {
             })
         }
     } else {
-        res.status(401).json({message: "product field required:- name, price, category, image, company"});
+        res.status(401).json({ message: "product field required:- name, price, category, image, company" });
     }
 }
 
@@ -41,7 +42,31 @@ const CreateNewProduct = (req, res) => {
 const getAllProducts = async (req, res) => {
     const products = await Product.find();
     if (products.length > 0) {
-        res.json(products);
+        // Perform the aggregation
+        Product.aggregate([
+            {
+                $lookup: {
+                    from: 'categories', // The collection to join with
+                    localField: 'category', // The field from the current collection
+                    foreignField: '_id', // The field from the joined collection
+                    as: 'category' // The alias for the joined data
+                }
+            },
+            {
+                $unwind: '$category' // Unwind the joined data array
+            }
+        ])
+            .then(products => {
+                console.log(products);
+                res.json(products);
+
+            })
+            .catch(err => {
+                res.json(err);
+                console.error(err);
+            });
+
+        //res.json(products)
     } else {
         res.json({ result: "No Product Found." });
     }
