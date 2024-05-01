@@ -74,7 +74,7 @@ const getAllProducts = async (req, res) => {
 
 // Get Single Product
 const GetSingleProduct = async (req, res) => {
-    let result = await Product.findOne({ _id: res.params.id });
+    let result = await Product.findOne({ _id: req.params.id });
     if (result) {
         res.status(200).json(result);
     } else {
